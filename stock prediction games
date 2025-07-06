@@ -1,0 +1,67 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNvZjyBg3TUpbVsMzDptR23",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Ashish11828/stock-prediction/blob/main/stock%20prediction%20games\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 10,
+      "metadata": {
+        "id": "sXRFgJlnSBX-"
+      },
+      "outputs": [],
+      "source": [
+        "def printTransactions(m, k, d, names, owned, prices):\n",
+        "    transactions = []\n",
+        "\n",
+        "    for i in range(k):\n",
+        "        name = names[i]\n",
+        "        shares = owned[i]\n",
+        "        recent_prices = prices[i]\n",
+        "        today_price = recent_prices[-1]\n",
+        "\n",
+        "        # Simple slope as trend indicator\n",
+        "        trend = recent_prices[-1] - recent_prices[0]\n",
+        "\n",
+        "        # If trend is downward and we own it, SELL\n",
+        "        if trend < -0.1 and shares > 0:\n",
+        "            transactions.append(f\"{name} SELL {shares}\")\n",
+        "\n",
+        "        # If trend is strongly upward, BUY as much as we can\n",
+        "        elif trend > 0.1:\n",
+        "            max_buy = int(m // today_price)\n",
+        "            if max_buy > 0:\n",
+        "                transactions.append(f\"{name} BUY {max_buy}\")\n",
+        "                m -= max_buy * today_price  # Update available money\n",
+        "\n",
+        "    print(len(transactions))\n",
+        "    for t in transactions:\n",
+        "        print(t)\n",
+        "\n"
+      ]
+    }
+  ]
+}
